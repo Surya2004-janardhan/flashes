@@ -1,0 +1,44 @@
+{
+  "name": "socials_ai_automation",
+  "version": "1.0.0",
+  "description": "Trying to automate possible social media through posts and small scale static content using live data and LLM powered  summarization.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "social-media",
+    "automation",
+    "ai",
+    "llm",
+    "news",
+    "instagram",
+    "facebook"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "form-data": "^4.0.4",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "node-cron": "^4.2.1",
+    "openai": "^5.20.2",
+    "sharp": "^0.34.3",
+    "sqlite3": "^5.1.7",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.35.0",
+    "jest": "^30.1.3",
+    "nodemon": "^3.1.10"
+  }
+}
