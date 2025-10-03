@@ -1,4 +1,4 @@
-# Ajivika News Slides Generator
+# News Slides Generator
 
 Daily automation for producing share-ready news slides by combining real-time headlines from **Newsdata.io** with stylised overlays generated via the **Segmind Text Overlay API**. Images are sourced from public domain repositories (Wikimedia Commons defaults, optional Pixabay) to keep licensing simple.
 
