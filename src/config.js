@@ -107,11 +107,6 @@ function loadConfig(options = {}) {
         theme: env.SEGMIND_THEME || "modern-dark",
       },
     },
-    scheduler: {
-      cron: env.SCHEDULE_CRON || "0 6 * * *",
-      timezone: env.SCHEDULE_TIMEZONE || "Etc/UTC",
-      runOnStart: bool(env.SCHEDULE_RUN_ON_START, false),
-    },
   };
 }
 

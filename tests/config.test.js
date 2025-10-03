@@ -28,5 +28,5 @@ test("loadConfig falls back to defaults when values missing", () => {
 
   assert.ok(cfg.newsdata.categories.length > 0);
   assert.equal(cfg.slides.targetCount, 12);
-  assert.equal(cfg.scheduler.cron, "0 6 * * *");
+  assert.ok(!cfg.scheduler);
 });
