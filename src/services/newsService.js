@@ -1,9 +1,9 @@
 const axios = require("axios");
-const pLimit = require("p-limit");
+const { default: pLimit } = require("p-limit");
 const config = require("../config");
 const logger = require("../logger");
 
-const limit = pLimit(4);
+const limit = pLimit(1);
 
 const DATE_FIELDS = ["pubDate", "published_at", "created_at"];
 
@@ -148,6 +148,82 @@ async function fetchLatestNews() {
   return deduped;
 }
 
+async function fetchNewsByCategory(targetCategory) {
+  if (!config.newsdata.apiKey) {
+    throw new Error(
+      "Missing NEWSDATA_API_KEY. Please set it in your .env file."
+    );
+  }
+
+  const { indiaCountryCode, worldCountries, languages } = config.newsdata;
+  const primaryLanguage = languages[0];
+
+  const tasks = [];
+
+  // Fetch for India
+  tasks.push(
+    limit(() =>
+      fetchSingleBatch({
+        category: targetCategory,
+        country: indiaCountryCode,
+        language: primaryLanguage,
+        region: "india",
+      }).catch((error) => {
+        logger.warn(
+          `Failed to fetch India ${targetCategory} news`,
+          error.message
+        );
+        return [];
+      })
+    )
+  );
+
+  // Fetch for world countries
+  for (const country of worldCountries) {
+    tasks.push(
+      limit(() =>
+        fetchSingleBatch({
+          category: targetCategory,
+          country,
+          language: primaryLanguage,
+          region: "world",
+        }).catch((error) => {
+          logger.warn(
+            `Failed to fetch world ${targetCategory} news (${country})`,
+            error.message
+          );
+          return [];
+        })
+      )
+    );
+  }
+
+  const results = await Promise.all(tasks);
+  const flattened = results.flat();
+
+  // Dedupe
+  const seen = new Set();
+  const deduped = [];
+  for (const article of flattened) {
+    if (!article.title) continue;
+    const key = `${article.title.toLowerCase()}::${article.region}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(article);
+  }
+
+  deduped.sort((a, b) => {
+    if (!a.publishedAt && !b.publishedAt) return 0;
+    if (!a.publishedAt) return 1;
+    if (!b.publishedAt) return -1;
+    return b.publishedAt.getTime() - a.publishedAt.getTime();
+  });
+
+  logger.info(`Fetched ${targetCategory} articles`, { count: deduped.length });
+  return deduped;
+}
+
 module.exports = {
   fetchLatestNews,
+  fetchNewsByCategory,
 };

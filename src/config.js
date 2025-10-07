@@ -83,29 +83,12 @@ function loadConfig(options = {}) {
         baseUrl: env.PIXABAY_BASE_URL || "https://pixabay.com/api/",
       },
     },
-    segmind: {
-      apiKey: env.SEGMIND_API_KEY || "",
+    imageOverlay: {
+      apiKey: env.API_TEMPLATE_API_KEY || "",
       baseUrl:
-        env.SEGMIND_BASE_URL || "https://api.segmind.com/v1/text-overlay",
-      timeoutMs: numeric(env.SEGMIND_TIMEOUT_MS, 15000),
-      title: {
-        fontFamily: env.SEGMIND_TITLE_FONT || "Poppins SemiBold",
-        fontSize: numeric(env.SEGMIND_TITLE_SIZE, 72),
-        color: env.SEGMIND_TITLE_COLOR || "#FFFFFF",
-        align: env.SEGMIND_TITLE_ALIGN || "center",
-      },
-      body: {
-        fontFamily: env.SEGMIND_BODY_FONT || "Inter Regular",
-        fontSize: numeric(env.SEGMIND_BODY_SIZE, 38),
-        color: env.SEGMIND_BODY_COLOR || "#F0F4F8",
-        align: env.SEGMIND_BODY_ALIGN || "center",
-      },
-      overlay: {
-        width: numeric(env.SEGMIND_WIDTH, 1920),
-        height: numeric(env.SEGMIND_HEIGHT, 1080),
-        padding: numeric(env.SEGMIND_PADDING, 96),
-        theme: env.SEGMIND_THEME || "modern-dark",
-      },
+        env.API_TEMPLATE_BASE_URL || "https://api.apitemplate.io/v1/create",
+      templateId: env.API_TEMPLATE_TEMPLATE_ID || "",
+      timeoutMs: numeric(env.API_TEMPLATE_TIMEOUT_MS, 15000),
     },
   };
 }

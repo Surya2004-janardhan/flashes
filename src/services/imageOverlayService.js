@@ -4,12 +4,12 @@ const config = require("../config");
 const { truncate } = require("../utils/text");
 
 function ensureCredentials() {
-  if (!config.segmind.apiKey) {
+  if (!config.imageOverlay.apiKey) {
     throw new Error(
       "Missing API_TEMPLATE_API_KEY. Please set it in your .env file."
     );
   }
-  if (!config.segmind.templateId) {
+  if (!config.imageOverlay.templateId) {
     throw new Error(
       "Missing API_TEMPLATE_TEMPLATE_ID. Please set it in your .env file."
     );
@@ -30,7 +30,7 @@ function buildPayload({ headline, summary, imageUrl }) {
 async function generateSlide({ headline, summary, imageUrl }) {
   ensureCredentials();
   const payload = buildPayload({ headline, summary, imageUrl });
-  const { baseUrl, timeoutMs, apiKey } = config.segmind;
+  const { baseUrl, timeoutMs, apiKey } = config.imageOverlay;
 
   try {
     const response = await axios.post(baseUrl, payload, {

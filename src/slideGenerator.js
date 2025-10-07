@@ -1,12 +1,12 @@
 const path = require("node:path");
 const fs = require("fs-extra");
 const slugify = require("slugify");
-const pLimit = require("p-limit");
+const { default: pLimit } = require("p-limit");
 const config = require("./config");
 const logger = require("./logger");
 const { fetchLatestNews } = require("./services/newsService");
 const { resolveImage } = require("./services/imageService");
-const { generateSlide } = require("./services/segmindService");
+const { generateSlide } = require("./services/imageOverlayService");
 const { extractSummary, truncate } = require("./utils/text");
 
 const limit = pLimit(config.slides.concurrentJobs);
